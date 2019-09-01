@@ -6,13 +6,6 @@ class Home extends Component {
 		super(props);
 	}
 
-	componentDidMount() {
-		fetch('http://localhost:4000/api/services')
-			.then((services) => services.json())
-			.then((services) => {
-				console.log(services);
-			});
-	}
 	render() {
 		return (
 			<Button variant='contained' color='primary'>
