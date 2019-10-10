@@ -1,5 +1,5 @@
-import * as React from 'react';
-import App, { Container } from 'next/app';
+import React from 'react';
+import App from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from '../src/theme';
@@ -17,14 +17,14 @@ export default class MyApp extends App {
 	render() {
 		const { Component, pageProps } = this.props;
 		return (
-			<Container>
+			<React.Fragment>
 				<ThemeProvider theme={theme}>
 					<CssBaseline />
 					<Layout>
 						<Component {...pageProps} />
 					</Layout>
 				</ThemeProvider>
-			</Container>
+			</React.Fragment>
 		);
 	}
 }

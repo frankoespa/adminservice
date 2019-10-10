@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+import CarIcon from '@material-ui/icons/DirectionsCar';
+import CustomerIcon from '@material-ui/icons/Group';
+import RepuestoIcon from '@material-ui/icons/Storage';
+import InformeIcon from '@material-ui/icons/InsertChart';
+import BuildIcon from '@material-ui/icons/Build';
+import ServicioIcon from '@material-ui/icons/AttachMoney';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme, Theme, createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
+import { Theme, createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Link from 'next/link';
+import Router from 'next/router';
 
 const drawerWidth = 240;
 
@@ -55,6 +61,7 @@ interface Props extends WithStyles<typeof styles> {}
 
 interface IState {
 	mobileOpen: boolean;
+	title: string;
 }
 
 class Layout extends Component<Props, IState> {
@@ -62,8 +69,16 @@ class Layout extends Component<Props, IState> {
 		super(props);
 		this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
 		this.state = {
-			mobileOpen: false
+			mobileOpen: false,
+			title: ''
 		};
+	}
+
+	componentDidMount() {
+		this.setState({ title: Router.pathname });
+		Router.events.on('routeChangeComplete', (url) => {
+			this.setState({ title: url });
+		});
 	}
 
 	handleDrawerToggle() {
@@ -74,26 +89,19 @@ class Layout extends Component<Props, IState> {
 
 	render() {
 		const { children, classes } = this.props;
-
+		const icons = [<BuildIcon />, <CustomerIcon />, <CarIcon />, <RepuestoIcon />, <ServicioIcon />, <InformeIcon />];
 		const drawer = (
 			<div>
 				<div className={classes.toolbar} />
 				<Divider />
 				<List>
-					{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-						<ListItem button key={text}>
-							<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItem>
-					))}
-				</List>
-				<Divider />
-				<List>
-					{['All mail', 'Trash', 'Spam'].map((text, index) => (
-						<ListItem button key={text}>
-							<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItem>
+					{['Trabajos', 'Clientes', 'Vehículos', 'Repuestos', 'Servicios', 'Informes'].map((text, index) => (
+						<Link href={`/${text}`} key={text}>
+							<ListItem button>
+								<ListItemIcon>{icons[index]}</ListItemIcon>
+								<ListItemText primary={text} />
+							</ListItem>
+						</Link>
 					))}
 				</List>
 			</div>
@@ -112,7 +120,7 @@ class Layout extends Component<Props, IState> {
 							<MenuIcon />
 						</IconButton>
 						<Typography variant='h6' noWrap>
-							Responsive drawer
+							{this.state.title}
 						</Typography>
 					</Toolbar>
 				</AppBar>
@@ -146,7 +154,7 @@ class Layout extends Component<Props, IState> {
 				</nav>
 				<main className={classes.content}>
 					<div className={classes.toolbar} />
-					{children}
+					<Container>{children}</Container>
 				</main>
 				<style jsx global>{`
 					html,

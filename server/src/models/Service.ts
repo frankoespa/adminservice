@@ -14,8 +14,7 @@ export default mongoose.model<IService>(
 			tipo: {
 				type: String,
 				enum: ['MANOB', 'ESPECIAL'],
-				required: true,
-				trim: true
+				required: true
 			}
 		},
 		{
