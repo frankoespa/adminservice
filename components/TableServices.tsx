@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DialogDeleteService from './DialogDeleteService';
 import IServiceDeletedVm from '../src/interfaces/IServiceDeletedVm';
 import DialogAddService from './DialogAddService';
+import { IServicioTrabajo } from '../src/classes/IServicioTrabajo';
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -23,41 +24,32 @@ const styles = (theme: Theme) =>
 		}
 	});
 
-interface IProps extends WithStyles<typeof styles> {}
+interface IProps extends WithStyles<typeof styles> {
+	items: IServicioTrabajo[];
+	deleteServicioGrilla(i: number): void;
+}
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
 	return { name, calories, fat, carbs, protein };
 }
 
 function TableServices(props: IProps): JSX.Element {
-	const { classes } = props;
-	const [services, setServices] = React.useState([
-		createData('Home  office', 159, 6.0, 24, 4.0),
-		createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-		createData('Eclair', 262, 16.0, 24, 6.0),
-		createData('Cupcake', 305, 3.7, 67, 4.3),
-		createData('Gingerbread', 356, 16.0, 49, 3.9)
-	]);
-	const [showDeleteServiceDialog, setshowDeleteServiceDialog] = React.useState(false);
-	const [showAddServiceDialog, setShowAddServiceDialog] = React.useState(false);
-	const [serviceDeleted, setServiceDeleted] = React.useState<IServiceDeletedVm>({ name: '', pos: null });
-
-	const deleteService = (pos: number): void => {
-		services.splice(pos, 1);
-		setServices([...services]);
-	};
+	const { classes, items, deleteServicioGrilla } = props;
+	const [showDeleteServiceDialog, setshowDeleteServiceDialog] = React.useState<boolean>(false);
+	const [showAddServiceDialog, setShowAddServiceDialog] = React.useState<boolean>(false);
+	const [serviceDeleted, setServiceDeleted] = React.useState<IServiceDeletedVm>({ nombre: '', pos: null });
 
 	const handleDeleteServiceDialog = (remove: boolean, pos?: number) => {
 		if (remove) {
-			deleteService(pos);
+			deleteServicioGrilla(pos);
 			setshowDeleteServiceDialog(false);
 		} else {
 			setshowDeleteServiceDialog(false);
 		}
 	};
 
-	const handleIconDeleteServiceDialog = (name: string, pos: number) => {
-		setServiceDeleted({ name, pos });
+	const handleIconDeleteServiceDialog = (nombre: string, pos: number) => {
+		setServiceDeleted({ nombre, pos });
 		setshowDeleteServiceDialog(true);
 	};
 
@@ -107,29 +99,29 @@ function TableServices(props: IProps): JSX.Element {
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{services.map((s, key) => (
+				{items.map((s, key) => (
 					<TableRow key={key} hover={true}>
 						<TableCell align='left' padding='none'>
 							<Tooltip title='Eliminar'>
-								<IconButton aria-label='filter list' onClick={() => handleIconDeleteServiceDialog(s.name, key)}>
+								<IconButton aria-label='filter list' onClick={() => handleIconDeleteServiceDialog(s.nombre, key)}>
 									<DeleteIcon />
 								</IconButton>
 							</Tooltip>
 						</TableCell>
 						<TableCell align='center' className={classes.tableCell}>
-							{s.name}
+							{s.tipo}
 						</TableCell>
 						<TableCell align='center' className={classes.tableCell}>
-							{s.calories}
+							{s.nombre}
 						</TableCell>
 						<TableCell align='center' className={classes.tableCell}>
-							{s.fat}
+							{s.desc}
 						</TableCell>
 						<TableCell align='center' className={classes.tableCell}>
-							{s.carbs}
+							{s.fechaHora.format('DD/MM/YYYY HH:mm')}
 						</TableCell>
 						<TableCell align='center' className={classes.tableCell}>
-							{s.protein}
+							{s.precio}
 						</TableCell>
 					</TableRow>
 				))}

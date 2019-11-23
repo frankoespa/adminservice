@@ -1,13 +1,13 @@
 import { Document } from 'mongoose';
-import { ICar } from './CarInterface';
+import { IVehiculo } from './IVehiculoDb';
 
-export interface ICustomer extends Document {
+export interface IUsuario extends Document {
 	nombre: String;
 	apellido: String;
 	dni: Number;
 	email: String;
-	cars: ICar['_id'][];
-	tel: Number;
+	vehiculos: IVehiculo['_id'][];
+	telefono: Number;
 	calle: String;
 	nro: Number;
 	localidad: String;

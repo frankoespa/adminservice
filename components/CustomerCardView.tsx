@@ -19,7 +19,7 @@ const styles = (theme: Theme) =>
 			color: 'white'
 		},
 		cardWrapper: {
-			marginBottom: theme.spacing(3)
+			marginBottom: theme.spacing(2)
 		},
 		cardTitleWrapper: {
 			backgroundColor: theme.palette.secondary.main

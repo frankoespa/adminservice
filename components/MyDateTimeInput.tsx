@@ -4,6 +4,10 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardDateTimePicker } f
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
 
+moment.updateLocale('es', {
+	weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
+});
+
 const styles = (theme: Theme) =>
 	createStyles({
 		fecha: {
@@ -24,12 +28,12 @@ function MyDateTimeInput(props: IProps): JSX.Element {
 		<MuiPickersUtilsProvider utils={MomentUtils} locale='es'>
 			<KeyboardDateTimePicker
 				className={classes.fecha}
-				autoOk={true}
+				autoOk={false}
 				invalidDateMessage='Formato inválido'
 				inputVariant='outlined'
 				disableToolbar
 				variant='inline'
-				format='D/M/YYYY HH:mm a'
+				format='D/M/YYYY HH:mm'
 				margin='normal'
 				id='date-picker-inline'
 				label={title}

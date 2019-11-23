@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { ICustomer } from '../interfaces/CustomerInterface';
+import { IUsuario } from '../interfaces/IUsuarioDb';
 
-export default mongoose.model<ICustomer>(
-	'Customers',
+export const Usuario = mongoose.model<IUsuario>(
+	'Usuarios',
 	new mongoose.Schema(
 		{
 			nombre: {
@@ -31,13 +31,13 @@ export default mongoose.model<ICustomer>(
 				trim: true,
 				required: true
 			},
-			cars: [
+			vehiculos: [
 				{
 					type: Schema.Types.ObjectId,
-					ref: 'Cars'
+					ref: 'Vehiculos'
 				}
 			],
-			tel: Number,
+			telefono: Number,
 			calle: {
 				type: String,
 				trim: true

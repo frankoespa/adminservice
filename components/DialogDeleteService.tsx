@@ -19,6 +19,9 @@ const styles = (theme: Theme) =>
 			},
 			color: Red[500],
 			borderColor: Red[500]
+		},
+		titleDialog: {
+			textAlign: 'center'
 		}
 	});
 
@@ -32,10 +35,18 @@ function DialogDeleteService(props: IProps): JSX.Element {
 	const { classes, open, handleDeleteServiceDialog, serviceDeleted } = props;
 
 	return (
-		<Dialog open={open} onClose={() => {}} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
-			<DialogTitle id='alert-dialog-title'>¿Desea eliminar el servicio?</DialogTitle>
+		<Dialog
+			open={open}
+			onClose={() => {}}
+			aria-labelledby='alert-dialog-title'
+			aria-describedby='alert-dialog-description'
+			fullWidth={true}
+			maxWidth='sm'>
+			<DialogTitle id='alert-dialog-title' className={classes.titleDialog}>
+				¿Desea eliminar el servicio?
+			</DialogTitle>
 			<DialogContent>
-				<DialogContentText id='alert-dialog-description'>{serviceDeleted.name}</DialogContentText>
+				<DialogContentText id='alert-dialog-description'>{serviceDeleted.nombre}</DialogContentText>
 			</DialogContent>
 			<DialogActions>
 				<Button variant='outlined' color='primary' onClick={() => handleDeleteServiceDialog(false)} className={classes.buttonCancel}>

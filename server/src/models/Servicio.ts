@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { IService } from '../interfaces/ServiceInterface';
+import { IServicio } from '../interfaces/IServicioDb';
 
-export default mongoose.model<IService>(
+export const Servicio = mongoose.model<IServicio>(
 	'Services',
 	new mongoose.Schema(
 		{

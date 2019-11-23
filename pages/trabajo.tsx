@@ -8,6 +8,8 @@ import PanelExpanded from '../components/PanelExpanded';
 import MyDateTimeInput from '../components/MyDateTimeInput';
 import CustomerCardView from '../components/CustomerCardView';
 import TableServices from '../components/TableServices';
+import { ITrabajo } from '../src/classes/ITrabajo';
+import { IServicioTrabajo } from '../src/classes/IServicioTrabajo';
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -16,21 +18,36 @@ const styles = (theme: Theme) =>
 		}
 	});
 
-interface Props extends WithStyles<typeof styles> {}
-
-interface IState {
-	estado: string;
-	fechaEntrada: moment.Moment;
-}
-
-class Trabajo extends Component<Props, IState> {
+interface IProps extends WithStyles<typeof styles> {}
+class VerTrabajo extends Component<IProps, ITrabajo> {
 	constructor(props) {
 		super(props);
 		this.estadoChange = this.estadoChange.bind(this);
 		this.fechaEntradaChange = this.fechaEntradaChange.bind(this);
+		this.fechaSalidaChange = this.fechaSalidaChange.bind(this);
+		this.deleteServicioGrilla = this.deleteServicioGrilla.bind(this);
 		this.state = {
 			estado: 'Reparando',
-			fechaEntrada: moment()
+			fechaEntrada: moment(),
+			fechaSalida: moment(),
+			servicios: [
+				{
+					_id: '',
+					nombre: 'Diagnóstico computarizado',
+					precio: 1500,
+					tipo: 'ESPECIAL',
+					desc: '',
+					fechaHora: moment()
+				},
+				{
+					_id: '',
+					nombre: 'Limpieza de inyectores',
+					precio: 1100,
+					tipo: 'ESPECIAL',
+					desc: '',
+					fechaHora: moment().add(1, 'days')
+				}
+			]
 		};
 	}
 
@@ -42,40 +59,28 @@ class Trabajo extends Component<Props, IState> {
 		this.setState({
 			fechaEntrada: date
 		});
-		console.log(date);
-		console.log(date.format('DD-MM-YYYY'));
+	}
+
+	fechaSalidaChange(date: moment.Moment, value: string) {
+		this.setState({
+			fechaSalida: date
+		});
+	}
+
+	deleteServicioGrilla(i: number) {
+		const listaServicios: IServicioTrabajo[] = this.state.servicios;
+		listaServicios.splice(i, 1);
+		this.setState({
+			servicios: listaServicios
+		});
 	}
 
 	render() {
 		const { classes } = this.props;
 		return (
 			<React.Fragment>
-				<Grid container spacing={5}>
-					<Grid item xl={6} xs={12}>
-						<CustomerCardView
-							title='Cliente'
-							mapper={{
-								Patente: 'OMA320',
-								Marca: 'Ford',
-								Año: '2014',
-								Modelo: 'Ecosport Titanium 2.0'
-							}}
-						/>
-					</Grid>
-					<Grid item xl={6} xs={12}>
-						<CustomerCardView
-							title='Vehículo'
-							mapper={{
-								Dni: 37654790,
-								Nombre: 'Alejandro James',
-								Contacto: '341 - 6452410',
-								Email: 'alejames@gmail.com'
-							}}
-						/>
-					</Grid>
-				</Grid>
 				<PanelExpanded title='Información del trabajo'>
-					<Grid container spacing={5}>
+					<Grid container justify='center' spacing={5}>
 						<Grid item xl={4} xs={12}>
 							<TextField
 								id='estado'
@@ -92,7 +97,12 @@ class Trabajo extends Component<Props, IState> {
 									</MenuItem>
 								))}
 							</TextField>
+						</Grid>
+					</Grid>
+					<Grid container spacing={5}>
+						<Grid item xl={4} xs={12}>
 							<MyDateTimeInput title='Entrada' value={this.state.fechaEntrada} valueOnChange={this.fechaEntradaChange} />
+							<MyDateTimeInput title='Salida' value={this.state.fechaSalida} valueOnChange={this.fechaSalidaChange} />
 						</Grid>
 						<Grid item xl={4} xs={12}>
 							<TextField
@@ -120,12 +130,37 @@ class Trabajo extends Component<Props, IState> {
 						</Grid>
 					</Grid>
 				</PanelExpanded>
+				<Grid container spacing={5}>
+					<Grid item xl={6} xs={12}>
+						<CustomerCardView
+							title='Cliente'
+							mapper={{
+								Patente: 'OMA320',
+								Marca: 'Ford',
+								Año: '2014',
+								Modelo: 'Ecosport Titanium 2.0'
+							}}
+						/>
+					</Grid>
+					<Grid item xl={6} xs={12}>
+						<CustomerCardView
+							title='Vehículo'
+							mapper={{
+								Dni: 37654790,
+								Nombre: 'Alejandro James',
+								Contacto: '341 - 6452410',
+								Email: 'alejames@gmail.com'
+							}}
+						/>
+					</Grid>
+				</Grid>
 				<PanelExpanded title='Servicios'>
-					<TableServices></TableServices>
+					<TableServices items={this.state.servicios} deleteServicioGrilla={this.deleteServicioGrilla}></TableServices>
 				</PanelExpanded>
+				{/* <PanelExpanded title='Presupuesto'></PanelExpanded> */}
 			</React.Fragment>
 		);
 	}
 }
 
-export default withStyles(styles)(Trabajo);
+export default withStyles(styles)(VerTrabajo);

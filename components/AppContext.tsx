@@ -1,9 +1,6 @@
 import React from 'react';
+import { ITrabajo } from '../src/classes/ITrabajo';
 
-interface IAppContext {
-	title: string;
-}
-
-const AppContext = React.createContext<IAppContext>(null);
+const AppContext = React.createContext<ITrabajo>({});
 
 export default AppContext;

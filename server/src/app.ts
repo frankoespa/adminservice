@@ -1,21 +1,19 @@
 import express from 'express';
 import cors from 'cors';
-import customers from './routes/customers';
-import services from './routes/services';
+import clientes from './routes/clientes';
+import servicios from './routes/servicios';
 
-const app = express();
+export const App = express();
 
 //Middlewares
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+App.use(cors());
+App.use(express.json());
+App.use(express.urlencoded({ extended: false }));
 
 //Routes
-app.use('/api/customers', customers);
-app.use('/api/services', services);
+App.use('/api/clientes', clientes);
+App.use('/api/servicios', servicios);
 
-app.get('*', (req, res, next) => {
+App.get('*', (req, res, next) => {
 	res.sendStatus(404);
 });
-
-export default app;

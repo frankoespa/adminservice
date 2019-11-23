@@ -1,10 +1,10 @@
 import express, { Router } from 'express';
-import Customer from '../models/Customer';
+import { Usuario } from '../models/Usuario';
 
 const router: Router = express.Router();
 
 router.get('/', (req, res, next) => {
-	let newCustomer = new Customer({
+	let newCustomer = new Usuario({
 		nombre: 'Franco',
 		apellido: 'Esparza',
 		dni: 37155400,

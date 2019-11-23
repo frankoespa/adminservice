@@ -1,4 +1,4 @@
 export default interface IServiceDeletedVm {
-	name: string;
+	nombre: string;
 	pos: number;
 }

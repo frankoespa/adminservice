@@ -11,6 +11,12 @@ const styles = (theme: Theme) =>
 		heading: {
 			fontWeight: theme.typography.fontWeightMedium,
 			width: '100%'
+		},
+		contentDialog: {
+			display: 'block'
+		},
+		root: {
+			marginBottom: theme.spacing(2)
 		}
 	});
 
@@ -23,13 +29,13 @@ function PanelExpanded(props: IProps): JSX.Element {
 	const { classes, children, title } = props;
 
 	return (
-		<ExpansionPanel defaultExpanded={true}>
+		<ExpansionPanel defaultExpanded={true} className={classes.root}>
 			<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
 				<Typography align='center' className={classes.heading}>
 					{title}
 				</Typography>
 			</ExpansionPanelSummary>
-			<ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+			<ExpansionPanelDetails className={classes.contentDialog}>{children}</ExpansionPanelDetails>
 		</ExpansionPanel>
 	);
 }

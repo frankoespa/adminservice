@@ -1,9 +1,9 @@
 import mongoose, { Schema } from 'mongoose';
-import { ICar } from '../interfaces/CarInterface';
+import { IVehiculo } from '../interfaces/IVehiculoDb';
 
-export default mongoose.model<ICar>(
-	'Cars',
-	new mongoose.Schema(
+export default mongoose.model<IVehiculo>(
+	'Vehiculos',
+	new mongoose.Schema<IVehiculo>(
 		{
 			patente: {
 				type: String,
@@ -11,7 +11,7 @@ export default mongoose.model<ICar>(
 			},
 			customer: {
 				type: Schema.Types.ObjectId,
-				ref: 'Customers'
+				ref: 'Usuarios'
 			},
 			familia: {
 				type: String,
@@ -26,16 +26,16 @@ export default mongoose.model<ICar>(
 				type: String,
 				required: true
 			},
-			desc: {
+			descripcion: {
 				type: String
 			},
-			year: {
+			anio: {
 				type: Number
 			},
 			color: {
 				type: String
 			},
-			km: Number
+			kms: Number
 		},
 		{
 			versionKey: false,

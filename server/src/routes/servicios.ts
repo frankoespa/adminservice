@@ -1,13 +1,12 @@
 import express, { Router } from 'express';
-import Service from '../models/Service';
+import { Servicio } from '../models/Servicio';
 
 const router: Router = express.Router();
 
 router.get('/', (req, res, next) => {
-	/* let newService = new Service({
+	/* let newService = new Servicio({
 		nombre: 'Limpieza de inyectores',
-		precio: 1200,
-		tipo: 'ESPECIAL'
+		precio: 1200
 	});
 
 	newService
@@ -18,7 +17,7 @@ router.get('/', (req, res, next) => {
 		.catch((error) => {
 			res.json({ error });
         }); */
-	Service.find().then((services) => {
+	Servicio.find().then((services) => {
 		res.status(200).json({ services });
 	});
 });
